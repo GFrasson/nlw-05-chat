@@ -1,5 +1,6 @@
 import "dotenv/config";
 import { DatabaseType, DataSource } from 'typeorm';
+import { CreateSettings1667495819492 } from "./migrations/1667495819492-CreateSettings";
 
 const dbType: DatabaseType = "postgres";
 
@@ -13,7 +14,7 @@ const AppDataSource = new DataSource({
     synchronize: false,
     logging: false,
     entities: [],
-    migrations: [],
+    migrations: [CreateSettings1667495819492],
 });
 
 export function createConnection(): Promise<DataSource> {
