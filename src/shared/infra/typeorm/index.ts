@@ -1,3 +1,4 @@
+import { Setting } from "@modules/settings/infra/typeorm/entities/Setting";
 import "dotenv/config";
 import { DatabaseType, DataSource } from 'typeorm';
 import { CreateSettings1667495819492 } from "./migrations/1667495819492-CreateSettings";
@@ -13,7 +14,7 @@ const AppDataSource = new DataSource({
     port: Number(process.env.TYPEORM_PORT),
     synchronize: false,
     logging: false,
-    entities: [],
+    entities: [Setting],
     migrations: [CreateSettings1667495819492],
 });
 
