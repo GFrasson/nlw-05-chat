@@ -23,6 +23,14 @@ class SettingsRepository implements ISettingsRepository {
 
         return setting;
     }
+
+    async findByUsername(username: string): Promise<Setting> {
+        const setting = await this.repository.findOneBy({
+            username
+        });
+
+        return setting;
+    }
 }
 
 export { SettingsRepository };
