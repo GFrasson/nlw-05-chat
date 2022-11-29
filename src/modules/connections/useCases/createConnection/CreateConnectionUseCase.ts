@@ -1,0 +1,51 @@
+import { inject, injectable } from "tsyringe";
+
+import { IConnectionsRepository } from "@modules/connections/repositories/IConnectionsRepository";
+import { IMessagesRepository } from "@modules/messages/repositories/IMessagesRepository";
+import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
+
+interface ICreateConnectionRequest {
+    text: string;
+    email: string;
+    socket_id: string;
+    admin_id?: string;
+}
+
+@injectable()
+class CreateConnectionUseCase {
+    constructor(
+        @inject("ConnectionsRepository")
+        private connectionsRepository: IConnectionsRepository,
+        @inject("UsersRepository")
+        private usersRepository: IUsersRepository,
+        @inject("MessagesRepository")
+        private messagesRepository: IMessagesRepository,
+    ) {}
+
+    async execute({ text, email, socket_id, admin_id }: ICreateConnectionRequest): Promise<void> {
+        let user = await this.usersRepository.findByEmail(email);
+
+        if (!user) {
+            user = await this.usersRepository.create({
+                email
+            });
+        }
+        
+        const connection = await this.connectionsRepository.findByUserId(user.id);
+        
+        await this.connectionsRepository.create({
+            socket_id,
+            user_id: user.id,
+            ...(connection && {
+                id: connection.id
+            })
+        });
+
+        await this.messagesRepository.create({
+            text,
+            user_id: user.id
+        });
+    }
+}
+
+export { CreateConnectionUseCase, ICreateConnectionRequest };
