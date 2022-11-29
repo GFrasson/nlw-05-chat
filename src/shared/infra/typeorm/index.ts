@@ -7,6 +7,8 @@ import { CreateUsers1668883540463 } from "./migrations/1668883540463-CreateUsers
 import { User } from "@modules/users/infra/typeorm/entities/User";
 import { CreateMessages1668885184344 } from "./migrations/1668885184344-CreateMessages";
 import { Message } from "@modules/messages/infra/typeorm/entities/Message";
+import { CreateConnections1669741162844 } from "./migrations/1669741162844-CreateConnections";
+import { Connection } from "@modules/connections/infra/typeorm/entities/Connection";
 
 const dbType: DatabaseType = "postgres";
 
@@ -19,8 +21,13 @@ const AppDataSource = new DataSource({
     port: Number(process.env.TYPEORM_PORT),
     synchronize: false,
     logging: false,
-    entities: [Setting, User, Message],
-    migrations: [CreateSettings1667495819492, CreateUsers1668883540463, CreateMessages1668885184344],
+    entities: [Setting, User, Message, Connection],
+    migrations: [
+        CreateSettings1667495819492,
+        CreateUsers1668883540463,
+        CreateMessages1668885184344,
+        CreateConnections1669741162844
+    ],
 });
 
 export function createConnection(): Promise<DataSource> {
