@@ -1,3 +1,4 @@
+import { Connection } from "@modules/connections/infra/typeorm/entities/Connection";
 import { Message } from "@modules/messages/infra/typeorm/entities/Message";
 import { Column, CreateDateColumn, Entity, OneToMany, PrimaryColumn, UpdateDateColumn } from "typeorm";
 import { v4 as uuidV4 } from "uuid";
@@ -12,6 +13,9 @@ class User {
 
     @OneToMany(() => Message, (message) => message.user)
     messages: Message[];
+
+    @OneToMany(() => Connection, (connection) => connection.user)
+    connections: Connection[];
 
     @CreateDateColumn()
     created_at: Date;
