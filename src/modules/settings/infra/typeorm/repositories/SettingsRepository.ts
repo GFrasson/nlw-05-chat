@@ -24,6 +24,15 @@ class SettingsRepository implements ISettingsRepository {
         return setting;
     }
 
+    async updateByUsername(username: string, chat: boolean): Promise<void> {
+        await this.repository
+            .createQueryBuilder()
+            .update(Setting)
+            .set({ chat })
+            .where("username = :username", { username })
+            .execute();
+    }
+
     async findByUsername(username: string): Promise<Setting> {
         const setting = await this.repository.findOneBy({
             username
