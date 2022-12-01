@@ -1,4 +1,3 @@
-
 import { CreateConnectionController } from "@modules/connections/useCases/createConnection/CreateConnectionController";
 import { Socket } from "socket.io";
 import { io } from "../io-ws";
