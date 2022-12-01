@@ -5,5 +5,5 @@ import { io } from "../io-ws";
 const createConnectionController = new CreateConnectionController();
 
 io.on("connect", (socket: Socket) => {
-    socket.on("client_first_access", (params) => createConnectionController.handle(socket, params));
+    socket.on("client_first_access", (params) => createConnectionController.handle(socket, io, params));
 });
